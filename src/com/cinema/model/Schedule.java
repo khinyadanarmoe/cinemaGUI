@@ -9,16 +9,16 @@ public class Schedule {
 	private int id;
 	private Movie movie;
 	private Theatre threatre;
-	private Time startTime;
-	private Time endTime;
-	private Date publicDate;
+	private String startTime;
+	private String endTime;
+	private String publicDate;
 	private List<Ticket> tickets = new ArrayList<Ticket>();
 	
 	public Schedule() {
 		
 	}
 	
-	public Schedule(Movie movie, Theatre threatre, Time startTime, Time endTime, Date publicDate) {
+	public Schedule(Movie movie, Theatre threatre, String startTime, String endTime, String publicDate) {
 		this.movie = movie;
 		this.threatre = threatre;
 		this.startTime = startTime;
@@ -36,13 +36,13 @@ public class Schedule {
 	public Theatre getThreatre() {
 		return threatre;
 	}
-	public Time getStartTime() {
+	public String getStartTime() {
 		return startTime;
 	}
-	public Time getEndTime() {
+	public String getEndTime() {
 		return endTime;
 	}
-	public Date getPublicDate() {
+	public String getPublicDate() {
 		return publicDate;
 	}
 	public List<Ticket> getTickets() {
@@ -57,13 +57,13 @@ public class Schedule {
 	public void setThreatre(Theatre threatre) {
 		this.threatre = threatre;
 	}
-	public void setStartTime(Time startTime) {
+	public void setStartTime(String startTime) {
 		this.startTime = startTime;
 	}
-	public void setEndTime(Time endTime) {
+	public void setEndTime(String endTime) {
 		this.endTime = endTime;
 	}
-	public void setPublicDate(Date publicDate) {
+	public void setPublicDate(String publicDate) {
 		this.publicDate = publicDate;
 	}
 	public void setTickets(List<Ticket> tickets) {

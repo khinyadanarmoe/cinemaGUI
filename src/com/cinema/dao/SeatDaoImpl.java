@@ -18,7 +18,7 @@ public class SeatDaoImpl extends SeatDao {
 
 	public SeatDaoImpl() {
 		this.connectionFactory = new PgSqlConnectionFactory();
-		this.theatreDao = new TheatreDao();
+		this.theatreDao = new TheatreDaoImp();
 	}
 
 	@Override
@@ -68,5 +68,17 @@ public class SeatDaoImpl extends SeatDao {
 	public void setParameters(PreparedStatement preparedStatement, Seat entity) throws SQLException {
 		preparedStatement.setString(1, entity.getTitle());
 		preparedStatement.setInt(2, entity.getTheatre().getId());
+	}
+
+	@Override
+	public String getUpdateQuery() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setUpdateParameters(PreparedStatement preparedStatement, Seat entity) {
+		// TODO Auto-generated method stub
+		
 	}
 }

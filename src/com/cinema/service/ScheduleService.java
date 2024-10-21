@@ -19,7 +19,7 @@ public class ScheduleService extends BaseService<Schedule> {
 	public ScheduleService() {
 		super(scheduleDao);
 		this.movieDao = new MovieDao();
-		this.theatreDao = new TheatreDao();
+		this.theatreDao = new TheatreDaoImp();
 	}
 
 	@Override
@@ -38,11 +38,11 @@ public class ScheduleService extends BaseService<Schedule> {
 		Theatre theatre = this.theatreDao.findbyId(theatreId);
 		
 		System.out.print("Enter Start Time (HH:MM:SS) : ");
-		Time startTime = Time.valueOf(br.readLine());
+		String startTime = br.readLine();
 		System.out.print("Enter End Time (HH:MM:SS) : ");
-		Time endTime = Time.valueOf(br.readLine());
+		String endTime = br.readLine();
 		System.out.print("Enter Public Date (YYYY-MM-DD) : ");
-		Date publicDate = Date.valueOf(br.readLine());
+		String publicDate = br.readLine();
 		
 		Schedule schedule = new Schedule(movie, theatre, startTime, endTime, publicDate);
 		scheduleDao.create(schedule);

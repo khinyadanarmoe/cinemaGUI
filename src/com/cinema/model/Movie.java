@@ -28,5 +28,10 @@ public class Movie {
 	public String toString() {
 		return "Movie [id=" + id + ", title=" + title + ", duration=" + duration + "]";
 	}
+	
+	public String[] toArray() {
+		String[] movieArr = {this.id + "", this.title, this.duration};
+		return movieArr;
+	}
 
 }

@@ -21,13 +21,13 @@ public class ScheduleDao extends AbstractDao<Schedule>{
 	public ScheduleDao() {
 		this.connectionFactory = new PgSqlConnectionFactory();
 		this.movieDao = new MovieDao();
-		this.theatreDao = new TheatreDao();
+		this.theatreDao = new TheatreDaoImp();
 	}
 
 
 	@Override
 	public String getTableName() {
-		return "schedules";
+		return "schedule";
 	}
 
 	@Override
@@ -41,9 +41,9 @@ public class ScheduleDao extends AbstractDao<Schedule>{
 			int theatreId = resultSet.getInt("theatre_id");
 			Theatre theatre = this.theatreDao.findbyId(theatreId);
 			schedule.setThreatre(theatre);
-			schedule.setStartTime(resultSet.getTime("start_time"));
-			schedule.setEndTime(resultSet.getTime("end_time"));
-			schedule.setPublicDate(resultSet.getDate("public_date"));
+			schedule.setStartTime(resultSet.getString("start_time"));
+			schedule.setEndTime(resultSet.getString("end_time"));
+			schedule.setPublicDate(resultSet.getString("public_date"));
 			return schedule;
 	}
 
@@ -56,9 +56,33 @@ public class ScheduleDao extends AbstractDao<Schedule>{
 	public void setParameters(PreparedStatement preparedStatement, Schedule entity) throws SQLException {
 		preparedStatement.setInt(1, entity.getMovie().getId());
 		preparedStatement.setInt(2, entity.getThreatre().getId());
-		preparedStatement.setTime(3, entity.getStartTime());
-		preparedStatement.setTime(4, entity.getEndTime());
-		preparedStatement.setDate(5, entity.getPublicDate());
+		preparedStatement.setString(3, entity.getStartTime());
+		preparedStatement.setString(4, entity.getEndTime());
+		preparedStatement.setString(5, entity.getPublicDate());
+	}
+
+
+	@Override
+	public String getUpdateQuery() {
+		return "UPDATE schedule SET movie_id = ?, theatre_id = ?, start_time = ?, end_time = ?, public_date = ? WHERE id = ?;";
+	}
+
+
+	@Override
+	public void setUpdateParameters(PreparedStatement preparedStatement, Schedule entity) {
+		
+		try {
+			preparedStatement.setInt(1, entity.getMovie().getId());
+			preparedStatement.setInt(2, entity.getThreatre().getId());
+			preparedStatement.setString(3, entity.getStartTime());
+			preparedStatement.setString(4, entity.getEndTime());
+			preparedStatement.setString(5, entity.getPublicDate());
+			preparedStatement.setInt(6, entity.getId());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		
 	}
 
 }

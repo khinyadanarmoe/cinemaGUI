@@ -87,10 +87,12 @@ public class AddCustomerPage {
 	
 	
 	
+	
 
 	private void initializeComponent() {
 		this.frame = new JFrame("Add New Customer");
 		this.frame.setSize(400, 300);
+		this.frame.setDefaultCloseOperation(frame.DISPOSE_ON_CLOSE);
 		this.frame.setLayout(new BorderLayout());
 		this.frame.setLocation(300, 300);
 		this.frame.setVisible(true);

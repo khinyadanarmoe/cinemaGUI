@@ -30,10 +30,12 @@ public class EditCustomerPage {
 	private JButton cancelBtn;
 	private AbstractDao<Customer> customerDao;
 	private Customer customer;
+	private CustomerOverviewPage parentFrame;
 
 
-	public EditCustomerPage(CustomerOverviewPage customerOverviewPage,int customerId) {
+	public EditCustomerPage(CustomerOverviewPage parentFrame,int customerId) {
 		
+		this.parentFrame = parentFrame;
 		this.customerDao = new CustomerDao();
 		this.customer = this.customerDao.findbyId(customerId);
 		initializeComponent();
@@ -71,16 +73,22 @@ public class EditCustomerPage {
 				customer.setName(name);
 				customer.setEmail(email);
 				customer.setAddress(address);
+				customer.setId(customer.getId());
 				
-				customerDao.create(customer);
+				
+				
+				customerDao.update(customer);
 
 				JOptionPane.showMessageDialog(frame, "Successfully updated!!");
 
+				parentFrame.refreshCustomerTable();
+				frame.dispose();
 			}
 
 
 		});
 	}
+	
 	
 
 	private void initializeComponent() {

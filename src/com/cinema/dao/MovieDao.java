@@ -46,4 +46,27 @@ public class MovieDao extends AbstractDao<Movie>{
 		
 	}
 
+
+	@Override
+	public String getUpdateQuery() {
+		return "update schedule set title = ? , duration = ? where id = ?";
+	}
+
+
+	@Override
+	public void setUpdateParameters(PreparedStatement preparedStatement, Movie entity) {
+		
+		
+		try {
+			preparedStatement.setString(1, entity.getTitle());
+			preparedStatement.setString(2, entity.getDuration());
+			preparedStatement.setInt(3, entity.getId());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+	}
+
 }

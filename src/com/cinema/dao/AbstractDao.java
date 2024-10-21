@@ -21,8 +21,12 @@ public abstract class AbstractDao<T> {
 
 	public abstract String getInsertValues();
 
+	public abstract String getUpdateQuery();
+	
 	public abstract void setParameters(PreparedStatement preparedStatement, T entity) throws SQLException;
 
+	public abstract void setUpdateParameters(PreparedStatement preparedStatement, T entity);
+	
 	public String getInsertQuery() {
 		String query = "insert into " + getTableName() + " " + this.getInsertValues();
 		return query;
@@ -50,7 +54,7 @@ public abstract class AbstractDao<T> {
 
 	public List<T> getAll() {
 		List<T> objects = new ArrayList<>();
-		String query = "select * from " + this.getTableName();
+		String query = "select * from " + this.getTableName() + " order by id desc";
 		try {
 			Connection connection = this.connectionFactory.createConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -81,6 +85,7 @@ public abstract class AbstractDao<T> {
 		}
 	}
 
+	
 	public void delete(int id){
 		try {
 		String query = "delete from " + this.getTableName() + " where id = ?";
@@ -94,4 +99,24 @@ public abstract class AbstractDao<T> {
 			this.connectionFactory.closeConnection();
 		}
 	}
+	
+	public void update(T entity) {
+		String query = this.getUpdateQuery();
+		
+		try {
+			Connection connection = this.connectionFactory.createConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			
+			this.setUpdateParameters(preparedStatement, entity);
+			preparedStatement.executeUpdate();
+		} catch(SQLException e){
+			System.out.print(e.getMessage());
+		}finally {
+			this.connectionFactory.closeConnection();
+		}
+	}
+
+	
+
+	
 }

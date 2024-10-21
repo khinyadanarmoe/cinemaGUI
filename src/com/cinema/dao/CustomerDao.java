@@ -47,4 +47,23 @@ public class CustomerDao extends AbstractDao<Customer> {
 		preparedStatement.setString(2, entity.getEmail());
 		preparedStatement.setString(3, entity.getAddress());
 	}
+
+	@Override
+	public String getUpdateQuery() {
+		return "update customers set name = ? , email = ?, address = ? where id = ?";
+	}
+
+	@Override
+	public void setUpdateParameters(PreparedStatement preparedStatement, Customer entity) {
+		
+		try {
+			preparedStatement.setString(1, entity.getName());
+			preparedStatement.setString(2, entity.getEmail());
+			preparedStatement.setString(3, entity.getAddress());
+			preparedStatement.setInt(4, entity.getId());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
 }

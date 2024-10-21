@@ -1,9 +1,9 @@
 package com.example.main;
 
-import com.example.view.LoginWindow;
+import com.example.view.HomePage;
 
 public class Main {
 	public static void main(String args[]) {
-		LoginWindow window = new LoginWindow();
+		new HomePage();
 	}
 }

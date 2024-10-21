@@ -37,6 +37,11 @@ public class Theatre {
 	}
 	@Override
 	public String toString() {
-		return "Theatre [id=" + id + ", name=" + name + ", cinema=" + cinema + "]";
+		return name + "-" + id;
+	}
+	
+	public String[] toArray(){
+		String[] theatreArray = {this.id+"" , this.name};
+		return theatreArray;
 	}
 }

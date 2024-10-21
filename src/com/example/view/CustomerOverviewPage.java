@@ -42,16 +42,15 @@ public class CustomerOverviewPage {
 	}
 
 	
-
 	private void initializeComponents() {
 		this.frame = new JFrame("Customer Overview");
 		this.frame.setSize(800, 500);
 		this.frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.frame.setLayout(new BorderLayout());
-		
+
 		this.tableModel = new DefaultTableModel(null, this.columns);
 		this.customersTable = new JTable(this.tableModel);
-	
+
 		this.scrollPane = new JScrollPane(this.customersTable);
 		this.frame.add(this.scrollPane, BorderLayout.CENTER);
 
@@ -80,21 +79,28 @@ public class CustomerOverviewPage {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int selectedRow = customersTable.getSelectedRow();
-
-				if (selectedRow != -1) {
-					int customerId = Integer.parseInt(getCustomerData()[selectedRow][0]);
-					customerDao.delete(customerId);
-					JOptionPane.showMessageDialog(frame, "Successfully Delected CustomerId: " + customerId);
-
-				} else {
-					JOptionPane.showMessageDialog(frame, "Please select a customer to delete");
-				}
+				
+				deleteCustomerAction();
+		
 
 			}
 
 		});
 
+	}
+
+	protected void deleteCustomerAction() {
+		int selectedRow = customersTable.getSelectedRow();
+
+		if (selectedRow != -1) {
+			int customerId = Integer.parseInt(this.tableModel.getValueAt(selectedRow,0).toString());
+			customerDao.delete(customerId);
+			JOptionPane.showMessageDialog(frame, "Successfully Delected CustomerId: " + customerId);
+
+		} else {
+			JOptionPane.showMessageDialog(frame, "Please select a customer to delete");
+		}
+		
 	}
 
 	private void editCustomerInfo() {
@@ -102,24 +108,20 @@ public class CustomerOverviewPage {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-				editBtnAction();
 
-				
+				editBtnAction();
 
 			}
 
 		});
 
 	}
-	
-	
 
 	protected void editBtnAction() {
 		int selectedRow = customersTable.getSelectedRow();
 
 		if (selectedRow != -1) {
-			
+
 			int customerId = Integer.parseInt(getCustomerData()[selectedRow][0]);
 			EditCustomerPage editCustomerPage = new EditCustomerPage(this, customerId);
 
@@ -127,6 +129,8 @@ public class CustomerOverviewPage {
 			JOptionPane.showMessageDialog(frame, "Please select a customer to delete");
 		}
 		
+		
+
 	}
 
 	private void addCustomer() {
@@ -142,7 +146,7 @@ public class CustomerOverviewPage {
 		});
 
 	}
-	
+
 	private void addCustomerAction() {
 		AddCustomerPage addCustomerPage = new AddCustomerPage(this);
 	}
@@ -160,21 +164,19 @@ public class CustomerOverviewPage {
 		}
 		return customersData;
 	}
-	
+
 	void refreshCustomerTable() {
 
 		this.tableModel.setRowCount(0);
 		loadCustomersData();
 	};
-	
+
 	private void loadCustomersData() {
 		List<Customer> customers = this.customerDao.getAll();
-		for (Customer customer: customers) {
+		for (Customer customer : customers) {
 			this.tableModel.addRow(customer.toArray());
 		}
-		
-		
+
 	}
-	
 
 }
